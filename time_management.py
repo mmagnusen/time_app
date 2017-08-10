@@ -1,3 +1,5 @@
+import datetime 
+
 hours_today_gym = 0
 
 hours_today_work = 0
@@ -23,8 +25,12 @@ def welcome_message():
 
 # Ask user if they want to log hours. If yes, enter_hours() function is called; if no, we print "goodbye" message
 def ask_for_hours():
-	log_hours = input("Would you like to log your hours now? ").upper()
+	last_log_file = open("time_log.csv", "r")
 
+	last_log_time = last_log_file.read()
+
+	log_hours = input("FYI, the last time you logged your hours was {}. Are you sure you'd like to log your hours now? ".format(last_log_time)).upper()
+	
 	if log_hours == "YES":
 		enter_hours()
 	else:

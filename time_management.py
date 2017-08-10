@@ -29,8 +29,11 @@ def ask_for_hours():
 
 	last_log_time = last_log_file.read()
 
-	log_hours = input("FYI, the last time you logged your hours was {}. Are you sure you'd like to log your hours now? ".format(last_log_time)).upper()
-	
+	log_hours = input("""
+				FYI, the last time you logged your hours was {}. 
+				Are you sure you'd like to log your hours now? 
+				""".format(last_log_time)).upper()
+
 	if log_hours == "YES":
 		enter_hours()
 	else:
@@ -63,7 +66,15 @@ def show_hours():
 
 	print("See you next time {}!".format(name))
 
+def update_last_log_time():
+	open_file_to_read = open("time_log.csv", "w")
+	currrent_time = str(datetime.datetime.now())
+	open_file_to_read.write(currrent_time)
+	open_file_to_read.close()
+
+
 get_name()
 welcome_message()
 ask_for_hours()
 show_hours()
+update_last_log_time()

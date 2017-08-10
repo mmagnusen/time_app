@@ -1,13 +1,3 @@
-# Welcome message, something like "Hi Marilyn! Well done on keeping up-to-date with your schedule. Let's help keep you on track :)"
-
-# There will be a prompt to ask me: how long at gym, how long at work, how long coding, how long socialising
-
-# I should be able to enter a command which tells the app I've finished entering my hours for today
-
-# It should give me a summary of each thing I've done today
-
-#Create variables for storing hours:
-
 hours_today_gym = 0
 
 hours_today_work = 0
@@ -16,10 +6,14 @@ hours_today_coding = 0
 
 hours_today_socialising = 0
 
-name = "Marilyn"
+name = ""
 
 
 # A welcome message to tell the user what the app does
+def get_name():
+	global name
+	name = input("Hi! What's your name? ")
+
 def welcome_message():
 	print("""
 		  Hi {}! Well done on keeping up-to-date with your schedule. 
@@ -29,7 +23,7 @@ def welcome_message():
 
 # Ask user if they want to log hours. If yes, enter_hours() function is called; if no, we print "goodbye" message
 def ask_for_hours():
-	log_hours = input("Would you like to log your hours now?").upper()
+	log_hours = input("Would you like to log your hours now? ").upper()
 
 	if log_hours == "YES":
 		enter_hours()
@@ -63,7 +57,7 @@ def show_hours():
 
 	print("See you next time {}!".format(name))
 
-
+get_name()
 welcome_message()
 ask_for_hours()
 show_hours()

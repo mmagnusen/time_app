@@ -14,7 +14,7 @@ last_log_time = last_log_file.read()
 
 name = ""
 
-currrent_time = time.time()
+current_time = time.time()
 
 # A welcome message to tell the user what the app does
 def get_name():
@@ -31,17 +31,17 @@ def welcome_message():
 
 
 def check_already_logged():
-	hours_between_logs = float(last_log_time) - currrent_time
+	hours_between_logs = float(last_log_time) - current_time
 
 	if hours_between_logs < 86400:
-		print("You've already logged your hours today. See you tomorrow!")
+		ask_for_hours()
 	else:
 		ask_for_hours()
 
 
 # Ask user if they want to log hours. If yes, enter_hours() function is called; if no, we print "goodbye" message
 def ask_for_hours():
-	log_hours = input("You haven't logged any hours for today. Would you like to log your hours now?")
+	log_hours = input("You haven't logged any hours for today. Would you like to log your hours now?").upper()
 
 	if log_hours == "YES":
 		start_logging()
@@ -56,15 +56,23 @@ def enter_hours():
 
 	global hours_today_gym
 	hours_today_gym = input("How many hours have you spent at the gym today?")
+	open_gym = open("gym.csv", "a")
+	open_gym.write(str(current_time) + "," + hours_today_gym + "\n") 
 
 	global hours_today_work
 	hours_today_work = input("How many hours have you spent at work today?")
+	open_work = open("work.csv", "a")
+	open_work.write(str(current_time) + "," + hours_today_work  + "\n") 
 
 	global hours_today_coding
 	hours_today_coding = input("How many hours have you spent coding today?")
+	open_coding = open("coding.csv", "a")
+	open_coding.write(str(current_time) + "," + hours_today_coding  + "\n") 
 
 	global hours_today_socialising
 	hours_today_socialising = input("How many hours have you spent socialising today?")
+	open_socialising = open("socialising.csv", "a")
+	open_socialising.write(str(current_time) + "," + hours_today_socialising  + "\n") 
 
 
 #Tell the users how many hours they've spent on each activity today and a goodbye message
@@ -80,6 +88,25 @@ def show_hours():
 
 	print("See you next time {}!".format(name))
 
+def report_hours():
+	print("Since the beginning of time, you have spent: \n")
+	report__total_hours("gym")
+	report__total_hours("coding")
+	report__total_hours("socialising")
+	report__total_hours("work")
+
+def report__total_hours(activity):
+	total = 0
+	open_file = open(activity + ".csv", "r")
+	read_file = open_file.read()
+	for hours in read_file.split("\n"):
+		if hours:
+			stored_hours = (hours.split(","))
+			total = total + int(stored_hours[1])
+
+	print(str(total) + " hours spent in/on " + activity)
+
+
 
 #Updates CSV file so last log time changes to current time
 def update_last_log_time():
@@ -94,3 +121,4 @@ def start_logging():
 get_name()
 welcome_message()
 check_already_logged()
+report_hours()

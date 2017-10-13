@@ -120,5 +120,5 @@ def start_logging():
 
 get_name()
 welcome_message()
-check_already_logged()
+dcheck_already_logged()
 report_hours()
